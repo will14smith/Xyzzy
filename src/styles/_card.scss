@@ -1,0 +1,19 @@
+.card {
+  @include card;
+
+  &--error {
+    background-color: $error-background;
+    color: $error-color;
+    border-color: $error-color;
+  }
+  &--warning {
+    background-color: $warning-background;
+    color: $warning-color;
+    border-color: $warning-color;
+  }
+  &--success {
+    background-color: $success-background;
+    color: $success-color;
+    border-color: $success-color;
+  }
+}

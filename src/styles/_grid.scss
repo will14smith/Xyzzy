@@ -1,0 +1,70 @@
+// USAGE:
+// <div class="grid">
+//   <div class="grid_12 grid__8--large"></div>
+//   <div class="grid_12 grid__4--large"></div>
+// </div>
+
+// BETTER USAGE:
+// .page { @include grid-base; }
+// .content { @include grid-cell(12); @include grid-cell(8, large); }
+// .sidebar { @include grid-cell(12); @include grid-cell(4, large); }
+
+// <div class="page">
+//   <div class="content"></div>
+//   <div class="sidebar"></div>
+// </div>
+
+@function grid-size($col, $total: $grid-columns) {
+  @return ($col / $grid-columns) * 100%;
+}
+
+@mixin grid-base {
+  margin-left: -$gutter-size / 2;
+  margin-right: -$gutter-size / 2;
+  margin-bottom: $gutter-size;
+
+  @include clearfix;
+}
+
+@mixin grid-cell-base {
+  position: relative;
+  float: left;
+
+  padding-left: $gutter-size / 2;
+  padding-right: $gutter-size / 2;
+}
+
+@mixin grid-cell-size($col, $breakpoint: false, $total: $grid-columns) {
+  $width: grid-size($col, $total);
+
+  @if $breakpoint != false {
+    @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+      width: $width;
+    }
+  } @else {
+    width: $width;
+  }
+}
+
+@mixin grid-cell($col, $breakpoint: false, $total: $grid-columns) {
+  @include grid-cell-base;
+  @include grid-cell-size($col, $breakpoint, $total);
+}
+
+.grid {
+  @include grid-base;
+
+  @for $col from 1 through $grid-columns {
+    &__#{$col} {
+      @include grid-cell($col);
+    }
+  }
+}
+
+@each $breakpoint, $_ in $breakpoints {
+  @for $col from 1 through $grid-columns {
+    .grid__#{$col}--#{$breakpoint} {
+      @include grid-cell-size($col, $breakpoint);
+    }
+  }
+}

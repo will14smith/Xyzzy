@@ -1,0 +1,38 @@
+$gutter-size: 8px;
+
+$font-size: 16px;
+$font-size-h1: 2.75rem;
+$font-size-h2: 2.3125rem;
+$font-size-h3: 1.6875rem;
+$font-size-h4: 1.4375rem;
+$font-size-h5: 1.125rem;
+$font-size-h6: 1rem;
+
+$breakpoints: (
+  small: 640px,
+  medium: 1024px,
+  large: 1440px,
+  huge: 1920px
+);
+
+$grid-columns: 12;
+
+$font-color: #000000;
+$link-color: #6486C0;
+$link-hover-color: #000000;
+$subtle-color: #999999;
+$background-color: #f3f2f1;
+
+$error-color: #cc6666;
+$error-background: #ffcccc;
+$warning-color: #ccaa66;
+$warning-background: #ffeecc;
+$success-color: #66cc66;
+$success-background: #ccffcc;
+
+$border-color: #ccddee;
+$hover-border-color: #aaccee;
+$focus-border-color: #77aaee;
+
+$card-background: #ffffff;
+$card-color: #000000;

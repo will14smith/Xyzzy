@@ -1,4 +1,9 @@
-// es6 polyfill
-require('babelify/polyfill');
+import {} from 'babelify/polyfill';
 
-// es6 code here (or es5 if you want).
+import React from 'react';
+import HelloWorld from './helloWorld';
+
+React.render(
+  <HelloWorld />,
+  document.body
+);

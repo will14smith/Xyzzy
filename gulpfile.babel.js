@@ -12,9 +12,14 @@ const dirs = {
   dest: 'dist',
 };
 
+function handleError(err) {
+  console.error(err);
+}
+
 gulp.task('html', () =>
   gulp.src(dirs.src + '/index.html')
     .pipe(gulp.dest(dirs.dest))
+    .on('error', handleError)
 );
 
 gulp.task('scripts', () =>
@@ -24,6 +29,7 @@ gulp.task('scripts', () =>
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(gulp.dest(dirs.dest))
+    .on('error', handleError)
 );
 
 gulp.task('styles', () =>
@@ -31,22 +37,26 @@ gulp.task('styles', () =>
 
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(dirs.dest))
+    .on('error', handleError)
 );
 
 gulp.task('lint', () =>
   gulp.src([dirs.src + '/**/*.js'. __filename])
     .pipe(eslint())
     .pipe(eslint.format())
+    .on('error', handleError)
 );
 
-gulp.task('serve', () =>
+gulp.task('serve', ['default'], () =>
   gulp.src('dist')
     .pipe(webserver({
       livereload: true,
       fallback: 'index.html',
       open: true
     }))
+    .on('error', handleError)
 );
+
 gulp.task('watch', ['default'], () => {
   gulp.watch(dirs.src + '/**/*.html', ['html']);
   gulp.watch(dirs.src + '/**/*.js', ['scripts', 'lint']);

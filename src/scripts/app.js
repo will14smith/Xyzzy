@@ -1,9 +1,14 @@
 import {} from 'babelify/polyfill';
 
 import React from 'react';
-import HelloWorld from './helloWorld';
+import Root from './Root';
+
+import dispatcher from './dispatcher';
+import { init as initHandlers } from './handlers';
+
+initHandlers(dispatcher);
 
 React.render(
-  <HelloWorld />,
+  <Root />,
   document.body
 );

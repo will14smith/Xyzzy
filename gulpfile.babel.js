@@ -5,7 +5,6 @@ import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import eslint from 'gulp-eslint';
-import webserver from 'gulp-webserver';
 
 const dirs = {
   src: 'src',
@@ -13,7 +12,12 @@ const dirs = {
 };
 
 function handleError(err) {
-  console.error(err);
+  if (err) {
+    console.error(err.toString());
+  } else {
+    console.error(err);
+  }
+  this.emit('end');
 }
 
 gulp.task('html', () =>
@@ -26,6 +30,7 @@ gulp.task('scripts', () =>
   browserify(dirs.src + '/scripts/app.js')
     .transform(babelify)
     .bundle()
+    .on('error', handleError)
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(gulp.dest(dirs.dest))
@@ -41,19 +46,9 @@ gulp.task('styles', () =>
 );
 
 gulp.task('lint', () =>
-  gulp.src([dirs.src + '/**/*.js'. __filename])
+  gulp.src([dirs.src + '/**/*.js', __filename])
     .pipe(eslint())
     .pipe(eslint.format())
-    .on('error', handleError)
-);
-
-gulp.task('serve', ['default'], () =>
-  gulp.src('dist')
-    .pipe(webserver({
-      livereload: true,
-      fallback: 'index.html',
-      open: true
-    }))
     .on('error', handleError)
 );
 

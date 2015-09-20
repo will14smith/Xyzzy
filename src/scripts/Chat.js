@@ -3,8 +3,6 @@ import React from 'react';
 import dispatcher from './dispatcher';
 import chatStore from './Models/Chat';
 
-import loadNames from './Actions/Names';
-
 export default class Chat extends React.Component {
   constructor() {
     super();
@@ -15,8 +13,6 @@ export default class Chat extends React.Component {
   componentDidMount() {
     this._handleNames = () => this.setState({ names: chatStore.getNames() });
     dispatcher.on('names', this._handleNames);
-
-    loadNames();
   }
 
   componentWillUnmount() {

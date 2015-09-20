@@ -12,25 +12,26 @@ function getRequest(data) {
 
 function success(data, dispatcher) {
   const request = getRequest(data);
-  dispatcher.dispatch(`${request.op}AjaxResponse`, data, request);
+  dispatcher.dispatch(`a_${request.op}`, data, request);
 }
 
 function error(data, dispatcher) {
   const request = getRequest(data);
-  dispatcher.dispatch(`${request.op}AjaxError`, data, request);
+  dispatcher.dispatch(`ae_${request.op}`, data, request);
 }
 
 function handle(dispatcher, op, successFn, errorFn) {
   if (successFn) {
-    dispatcher.on(`${op}AjaxResponse`, successFn);
+    dispatcher.on(`a_${op}`, successFn);
   }
   if (errorFn) {
-    dispatcher.on(`${op}AjaxError`, errorFn);
+    dispatcher.on(`ae_${op}`, errorFn);
   }
 }
 
 import firstLoad, { handleError as firstLoadError } from './FirstLoad';
 import register from './Register';
+import names from './Names';
 
 export function init(dispatcher) {
   dispatcher.on('ajaxResponse', success);
@@ -38,4 +39,5 @@ export function init(dispatcher) {
 
   handle(dispatcher, AjaxOperation.FIRST_LOAD, firstLoad, firstLoadError);
   handle(dispatcher, AjaxOperation.REGISTER, register);
+  handle(dispatcher, AjaxOperation.NAMES, names);
 }

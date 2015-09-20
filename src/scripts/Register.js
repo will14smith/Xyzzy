@@ -13,11 +13,11 @@ export default class Register extends React.Component {
 
   componentDidMount() {
     this._handleError = data => this.handleError(data);
-    dispatcher.on(`${AjaxOperation.REGISTER}AjaxError`, this._handleError);
+    dispatcher.on(`ae_${AjaxOperation.REGISTER}`, this._handleError);
   }
 
   componentWillUnmount() {
-    dispatcher.off(`${AjaxOperation.REGISTER}AjaxError`, this._handleError);
+    dispatcher.off(`ae_${AjaxOperation.REGISTER}`, this._handleError);
   }
 
 

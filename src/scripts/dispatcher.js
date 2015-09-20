@@ -6,10 +6,10 @@ class Dispatcher {
   }
 
   on(event, fn) {
-    this._emitter.on(event, fn);
+    this._emitter.addListener(event, fn);
   }
   off(event, fn) {
-    this._emitter.off(event, fn);
+    this._emitter.removeListener(event, fn);
   }
 
   dispatch(event, ...args) {

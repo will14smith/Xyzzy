@@ -30,14 +30,16 @@ function handle(dispatcher, op, successFn, errorFn) {
 }
 
 import firstLoad, { handleError as firstLoadError } from './FirstLoad';
-import register from './Register';
+import gameList from './GameList';
 import names from './Names';
+import register from './Register';
 
 export function init(dispatcher) {
   dispatcher.on('ajaxResponse', success);
   dispatcher.on('ajaxError', error);
 
   handle(dispatcher, AjaxOperation.FIRST_LOAD, firstLoad, firstLoadError);
-  handle(dispatcher, AjaxOperation.REGISTER, register);
+  handle(dispatcher, AjaxOperation.GAME_LIST, gameList);
   handle(dispatcher, AjaxOperation.NAMES, names);
+  handle(dispatcher, AjaxOperation.REGISTER, register);
 }

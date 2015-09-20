@@ -1,15 +1,15 @@
-import { LongPollResponse } from '../../constants';
+import { LongPollEvent, LongPollResponse } from '../../constants';
 
 function success(data, dispatcher) {
   if (data[LongPollResponse.TIMESTAMP] || data[LongPollResponse.ERROR]) {
     // try again with an array...
-    return success([data]);
+    return success([data], dispatcher);
   }
 
   data.forEach(message => {
     const op = message[LongPollResponse.EVENT];
 
-    dispatcher.dispatch(`lp_${op}`, data);
+    dispatcher.dispatch(`lp_${op}`, message);
   });
 }
 
@@ -26,7 +26,13 @@ function handle(dispatcher, op, successFn, errorFn) {
   }
 }
 
+import newPlayer from './NewPlayer';
+import playerLeave from './PlayerLeave';
+
 export function init(dispatcher) {
   dispatcher.on('longPollResponse', success);
   dispatcher.on('longPollError', error);
+
+  handle(dispatcher, LongPollEvent.NEW_PLAYER, newPlayer);
+  handle(dispatcher, LongPollEvent.PLAYER_LEAVE, playerLeave);
 }

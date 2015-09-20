@@ -18,7 +18,13 @@ class ChatStore {
     }
   }
   removeNames(names) {
+    const size = this._names.size;
+
     names.forEach(name => this._names.delete(name));
+    
+    if (this._names.size !== size) {
+      dispatch('names');
+    }
   }
 }
 

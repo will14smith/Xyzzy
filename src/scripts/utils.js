@@ -47,3 +47,26 @@ export function ajaxRequest({ url, data, method = 'GET' }) {
     return JSON.parse(xhr.response);
   });
 }
+
+import chatStore, { Message } from './Models/Chat';
+export function log(message) {
+  chatStore.addMessage(new Message({
+    time: Date.now(),
+    text: message,
+    className: 'message--info',
+  }));
+}
+export function warn(message) {
+  chatStore.addMessage(new Message({
+    time: Date.now(),
+    text: message,
+    className: 'message--warn',
+  }));
+}
+export function error(message) {
+  chatStore.addMessage(new Message({
+    time: Date.now(),
+    text: message,
+    className: 'message--error',
+  }));
+}

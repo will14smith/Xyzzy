@@ -1,0 +1,43 @@
+.list {
+  list-style-type: none;
+
+  margin: 0;
+  padding: 0;
+
+  li {
+    border-top: 1px solid $border-color;
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+
+  a {
+    display: block;
+
+    padding: $gutter-size;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $link-color;
+      color: #ffffff;
+
+      cursor: pointer;
+    }
+  }
+}
+
+.list--messages {
+  li {
+    padding: 1px $gutter-size;
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+
+.card .list {
+  margin: -$gutter-size;
+}

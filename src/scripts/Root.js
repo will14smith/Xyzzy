@@ -34,8 +34,8 @@ export default class Root extends React.Component {
       return <Register />;
     case 'browser':
       return (<div className="grid">
-        <Browser className="grid__9" />
-        <Chat className="grid__3" />
+        <div className="grid__9"><Browser /></div>
+        <div className="grid__3"><Chat /></div>
       </div>);
     default:
       return <div className="card text--center">Loading...</div>;

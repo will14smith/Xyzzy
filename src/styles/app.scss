@@ -2,6 +2,13 @@
 @import 'mixins';
 @import 'normalize';
 
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 @import 'type';
 @import 'grid';
 @import 'card';

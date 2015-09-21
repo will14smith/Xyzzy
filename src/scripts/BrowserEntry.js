@@ -2,6 +2,8 @@ import React from 'react';
 
 import { GameStateText } from './constants';
 
+import joinGame from './Actions/JoinGame';
+
 export default class Browser extends React.Component {
   static propTypes = {
     game: React.PropTypes.object.isRequired,
@@ -10,6 +12,18 @@ export default class Browser extends React.Component {
   constructor() {
     super();
   }
+
+  joinGame(e, game) {
+    e.preventDefault();
+    if (game.passworded) {
+      console.error('NIE - join passworded');
+    }
+
+    joinGame({
+      id: game.id,
+    });
+  }
+
   render() {
     const game = this.props.game;
 
@@ -24,7 +38,7 @@ export default class Browser extends React.Component {
       </div>
 
       <div className="browser-entry__buttons">
-        <div className="browser-entry__button browser-entry__button--join">Join</div>
+        <div className="browser-entry__button browser-entry__button--join" onClick={e => this.joinGame(e, game)}>Join</div>
         <div className="browser-entry__button browser-entry__button--spectate">Spectate</div>
       </div>
     </div>);

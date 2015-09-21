@@ -1,11 +1,10 @@
 import React from 'react';
 
+import BrowserEntry from './BrowserEntry';
+
 import dispatcher from './dispatcher';
 import gamesStore from './Models/Games';
-
 import loadGames from './Actions/GameList';
-
-import BrowserEntry from './BrowserEntry';
 
 export default class Browser extends React.Component {
   constructor() {

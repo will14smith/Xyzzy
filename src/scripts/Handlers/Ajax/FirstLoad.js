@@ -1,7 +1,7 @@
 import { AjaxResponse, AjaxOperation, ErrorCode, ReconnectNextAction } from '../../constants';
 import invokeFirstLoad from '../../Actions/FirstLoad';
 import handleCardSets from '../../Actions/CardSets';
-import handleRegister from './Register';
+import { postRegisterInit } from './Register';
 
 export default function handle(res, req, dispatcher) {
   handleCardSets(res[AjaxResponse.CARD_SETS]);
@@ -10,11 +10,15 @@ export default function handle(res, req, dispatcher) {
     return dispatcher.dispatch('c_register');
   }
 
-  handleRegister(res, req, dispatcher);
+  postRegisterInit(res);
 
   const reconnectAction = res[AjaxResponse.NEXT];
   switch (reconnectAction) {
   case ReconnectNextAction.NONE:
+    dispatcher.dispatch('c_browser');
+    break;
+  case ReconnectNextAction.GAME:
+    dispatcher.dispatch('c_game', res[AjaxResponse.GAME_ID]);
     break;
   default:
     console.warn(`Unhandled ReconnectNextAction: ${reconnectAction}`);

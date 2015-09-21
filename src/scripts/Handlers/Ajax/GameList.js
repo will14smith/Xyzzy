@@ -1,5 +1,7 @@
 import { AjaxResponse } from '../../constants';
-import gamesStore, { Game } from '../../Models/Games';
+
+import { Game } from '../../Models/Game';
+import gamesStore from '../../Models/Games';
 
 export default function handle(res) {
   const games = res[AjaxResponse.GAMES];

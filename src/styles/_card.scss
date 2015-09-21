@@ -17,3 +17,10 @@
     border-color: $success-color;
   }
 }
+
+a.card {
+  display: inline-block;
+  margin-bottom: 0;
+
+  cursor: pointer;
+}

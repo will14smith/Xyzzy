@@ -1,0 +1,51 @@
+.browser-entry {
+  &__title {
+    float: left;
+  }
+  &__status {
+    float: right;
+  }
+
+  &__info {
+    clear: both;
+  }
+
+  &__buttons {
+    margin: -$gutter-size;
+    margin-top: $gutter-size;
+
+    @include clearfix;
+  }
+  &__button {
+    @include grid-cell-base;
+    text-align: center;
+
+    border-top: 1px solid $border-color;
+    cursor: pointer;
+
+    &--join {
+      @include grid-cell-size(8);
+
+      border-right: 1px solid $border-color;
+
+      background-color: $success-background;
+      color: $success-color;
+
+      &:hover {
+        background-color: $success-color;
+        color: $success-background;
+      }
+    }
+    &--spectate {
+      @include grid-cell-size(4);
+
+      background-color: $warning-background;
+      color: $warning-color;
+
+      &:hover {
+        background-color: $warning-color;
+        color: $warning-background;
+      }
+    }
+  }
+}

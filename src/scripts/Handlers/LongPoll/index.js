@@ -27,6 +27,7 @@ function handle(dispatcher, op, successFn, errorFn) {
 }
 
 import chat from './Chat';
+import gameListRefresh from './GameListRefresh';
 import newPlayer from './NewPlayer';
 import playerLeave from './PlayerLeave';
 
@@ -34,7 +35,10 @@ export function init(dispatcher) {
   dispatcher.on('longPollResponse', success);
   dispatcher.on('longPollError', error);
 
+  handle(dispatcher, LongPollEvent.NOOP, () => {});
+
   handle(dispatcher, LongPollEvent.CHAT, chat);
+  handle(dispatcher, LongPollEvent.GAME_LIST_REFRESH, gameListRefresh);
   handle(dispatcher, LongPollEvent.NEW_PLAYER, newPlayer);
   handle(dispatcher, LongPollEvent.PLAYER_LEAVE, playerLeave);
 }

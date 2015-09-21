@@ -28,7 +28,9 @@ gulp.task('html', () =>
 
 gulp.task('scripts', () =>
   browserify(dirs.src + '/scripts/app.js')
-    .transform(babelify)
+    .transform(babelify.configure({
+      optional: ['es7.classProperties'],
+    }))
     .bundle()
     .on('error', handleError)
     .pipe(source('app.js'))

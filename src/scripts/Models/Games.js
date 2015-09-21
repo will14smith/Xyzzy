@@ -5,7 +5,7 @@ import { GameOptionData, GameInfo } from '../constants';
 export class Game {
   constructor({
     id, state,
-    host, players, playerLimit, spectatorLimit,
+    host, players, playerLimit, spectators, spectatorLimit,
     idleTimerEnabled, passworded,
     cardSets, blankLimit, scoreLimit,
    }) {
@@ -14,6 +14,7 @@ export class Game {
     this._host = host;
     this._players = players;
     this._playerLimit = playerLimit;
+    this._spectators = spectators;
     this._spectatorLimit = spectatorLimit;
     this._idleTimerEnabled = idleTimerEnabled;
     this._passworded = passworded;
@@ -27,6 +28,7 @@ export class Game {
   get host() { return this._host; }
   get players() { return this._players; }
   get playerLimit() { return this._playerLimit; }
+  get spectators() { return this._spectators; }
   get spectatorLimit() { return this._spectatorLimit; }
   get idleTimerEnabled() { return this._idleTimerEnabled; }
   get passworded() { return this._passworded; }
@@ -44,6 +46,7 @@ export class Game {
       host: data[GameInfo.HOST],
       players: data[GameInfo.PLAYERS],
       playerLimit: options[GameOptionData.PLAYER_LIMIT],
+      spectators: data[GameInfo.SPECTATORS],
       spectatorLimit: options[GameOptionData.SPECTATOR_LIMIT],
 
       idleTimerEnabled: options[GameOptionData.USE_TIMER],

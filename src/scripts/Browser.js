@@ -5,6 +5,8 @@ import gamesStore from './Models/Games';
 
 import loadGames from './Actions/GameList';
 
+import BrowserEntry from './BrowserEntry';
+
 export default class Browser extends React.Component {
   constructor() {
     super();
@@ -22,8 +24,26 @@ export default class Browser extends React.Component {
     dispatcher.off('games', this._handleGames);
   }
 
+  createGame(e) {
+    e.preventDefault();
+
+    console.log('create game');
+  }
+  refreshList(e) {
+    e.preventDefault();
+
+    loadGames();
+  }
+
   renderControls() {
-    return <div />;
+    return (<div className="grid">
+      <div className="grid__6 text--left">
+        <a onClick={e => this.createGame(e)} className="card">Create</a>
+      </div>
+      <div className="grid__6 text--right">
+        <a onClick={e => this.refreshList(e)} className="card">Refresh</a>
+      </div>
+    </div>);
   }
   renderGames() {
     if (this.state.games.length === 0) {
@@ -34,9 +54,7 @@ export default class Browser extends React.Component {
 
     return (<div>
       {this.state.games.map(game => {
-        return (<div className="card">
-          Hosted by {game.host}
-        </div>);
+        return <BrowserEntry key={game.id} game={game} />;
       })}
     </div>);
   }

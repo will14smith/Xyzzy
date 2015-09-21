@@ -1,0 +1,15 @@
+.list--messages {
+  li {
+    padding: 2px $gutter-size;
+  }
+
+  form {
+    margin: -2px (-$gutter-size);
+  }
+  input {
+    width: 100%;
+    padding: $gutter-size;
+    border: none;
+    outline: none;
+  }
+}

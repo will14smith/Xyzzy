@@ -13,6 +13,8 @@ class Request {
   get serial() { return this._data[AjaxRequest.SERIAL]; }
   set serial(value) { this._data[AjaxRequest.SERIAL] = value; }
 
+  get(key) { return this._data[key]; }
+
   // internal
   _set(key, value) {
     this._data[key] = value;

@@ -33,6 +33,7 @@ import firstLoad, { handleError as firstLoadError } from './FirstLoad';
 import gameList from './GameList';
 import getGameInfo from './GetGameInfo';
 import joinGame from './JoinGame';
+import leaveGame from './LeaveGame';
 import names from './Names';
 import register from './Register';
 
@@ -44,6 +45,7 @@ export function init(dispatcher) {
   handle(dispatcher, AjaxOperation.GAME_LIST, gameList);
   handle(dispatcher, AjaxOperation.GET_GAME_INFO, getGameInfo);
   handle(dispatcher, AjaxOperation.JOIN_GAME, joinGame);
+  handle(dispatcher, AjaxOperation.LEAVE_GAME, leaveGame);
   handle(dispatcher, AjaxOperation.NAMES, names);
   handle(dispatcher, AjaxOperation.REGISTER, register);
 }

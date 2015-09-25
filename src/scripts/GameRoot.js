@@ -7,6 +7,7 @@ import Chat from './Chat';
 import dispatcher from './dispatcher';
 import gameStore from './Models/Game';
 import getGameInfo from './Actions/GetGameInfo';
+import leaveGame from './Actions/LeaveGame';
 
 export default class GameRoot extends React.Component {
   constructor(props) {
@@ -45,9 +46,30 @@ export default class GameRoot extends React.Component {
     dispatcher.off(`game:${this.state.gameId}`, this._handleGame);
   }
 
+  startGame(event) {
+    event.preventDefault();
+    // TODO
+  }
+  leaveGame(event) {
+    event.preventDefault();
+    leaveGame({ gameId: this.state.gameId });
+  }
+
+  renderControls() {
+    // TODO show/hide start button
+    return (<div className="grid">
+      <div className="grid__6 text--left">
+        <a onClick={e => this.startGame(e)} className="card">Start</a>
+      </div>
+      <div className="grid__6 text--right">
+        <a onClick={e => this.leaveGame(e)} className="card">Leave Game</a>
+      </div>
+    </div>);
+  }
+
   renderPlayers() {
     const players = (this.state.playerInfo || []).map(player => {
-      return (<div className="grid__4">
+      return (<div className="grid__4" key={player.name}>
         <div className="card">
           <strong>{player.name}</strong><span> - {player.score} - {GamePlayerStatusMessage[player.state]}</span>
         </div>
@@ -66,6 +88,7 @@ export default class GameRoot extends React.Component {
 
     return (<div className="grid">
       <div className="grid__9">
+        {this.renderControls()}
         {game}
         {this.renderPlayers()}
       </div>

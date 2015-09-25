@@ -14,7 +14,7 @@ class Dispatcher {
 
   dispatch(event, ...args) {
     if (this._emitter.emit(event, ...args, this) !== true) {
-      console.warn(`There are no listeners to ${event}.`);
+      console.warn(`There are no listeners to ${event}.`, args);
     }
   }
 }

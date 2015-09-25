@@ -2,9 +2,9 @@ import React from 'react';
 
 import BrowserEntry from './BrowserEntry';
 
-import dispatcher from './dispatcher';
-import gamesStore from './Models/Games';
-import loadGames from './Actions/GameList';
+import dispatcher from '../dispatcher';
+import gamesStore from '../Models/Games';
+import loadGames from '../Actions/GameList';
 
 export default class Browser extends React.Component {
   constructor() {
@@ -26,7 +26,7 @@ export default class Browser extends React.Component {
   createGame(e) {
     e.preventDefault();
 
-    console.log('create game');
+    // TODO
   }
   refreshList(e) {
     e.preventDefault();

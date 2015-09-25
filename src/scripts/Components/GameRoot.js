@@ -1,13 +1,21 @@
 import React from 'react';
 
-import { GamePlayerStatusMessage } from './constants';
+import { GameState } from '../constants';
 
 import Chat from './Chat';
+import GamePlayer from './GamePlayer';
 
-import dispatcher from './dispatcher';
-import gameStore from './Models/Game';
-import getGameInfo from './Actions/GetGameInfo';
-import leaveGame from './Actions/LeaveGame';
+import GameDealing from './GameDealing';
+import GameJudging from './GameJudging';
+import GameLobby from './GameLobby';
+import GamePlaying from './GamePlaying';
+import GameRoundOver from './GameRoundOver';
+
+import dispatcher from '../dispatcher';
+import appState from '../Models/App';
+import gameStore from '../Models/Game';
+import getGameInfo from '../Actions/GetGameInfo';
+import leaveGame from '../Actions/LeaveGame';
 
 export default class GameRoot extends React.Component {
   constructor(props) {
@@ -67,29 +75,35 @@ export default class GameRoot extends React.Component {
     </div>);
   }
 
-  renderPlayers() {
-    const players = (this.state.playerInfo || []).map(player => {
-      return (<div className="grid__4" key={player.name}>
-        <div className="card">
-          <strong>{player.name}</strong><span> - {player.score} - {GamePlayerStatusMessage[player.state]}</span>
-        </div>
-      </div>);
-    });
+  renderGame() {
+    if (!this.state.game) {
+      return <div className="card">Loading...</div>;
+    }
 
-    return (<div className="grid">
-      {players}
-    </div>);
+    const isHosting = this.state.game.host === appState.username;
+    // 2 states: lobby (host, player, spectator), playing (player, spectator)
+
+    switch (this.state.game.state) {
+    case GameState.LOBBY: return <GameLobby gameId={this.state.game.id} isHosting={isHosting} />;
+    case GameState.DEALING: return <GameDealing gameId={this.state.game.id} isHosting={isHosting} />;
+    case GameState.PLAYING: return <GamePlaying gameId={this.state.game.id} isHosting={isHosting} />;
+    case GameState.JUDGING: return <GameJudging gameId={this.state.game.id} isHosting={isHosting} />;
+    case GameState.ROUND_OVER: return <GameRoundOver gameId={this.state.game.id} isHosting={isHosting} />;
+    default: throw new Error(`Unknown game state ${this.state.game.state}`);
+    }
+  }
+
+  renderPlayers() {
+    const players = (this.state.playerInfo || []).map(player => <GamePlayer player={player} key={player.name} />);
+
+    return <div className="grid">{players}</div>;
   }
 
   render() {
-    const game = <div className="card card--warning">IN GAME!</div>;
-
-    // 2 states: lobby (host, player, spectator), playing (player, spectator)
-
     return (<div className="grid">
       <div className="grid__9">
         {this.renderControls()}
-        {game}
+        {this.renderGame()}
         {this.renderPlayers()}
       </div>
       <div className="grid__3"><Chat /></div>

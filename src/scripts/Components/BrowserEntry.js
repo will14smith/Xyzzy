@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { GameStateText } from './constants';
+import { GameStateText } from '../constants';
 
-import joinGame from './Actions/JoinGame';
+import joinGame from '../Actions/JoinGame';
 
 export default class Browser extends React.Component {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class Browser extends React.Component {
   joinGame(e, game) {
     e.preventDefault();
     if (game.passworded) {
-      console.error('NIE - join passworded');
+      // TODO
     }
 
     joinGame({

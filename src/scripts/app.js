@@ -1,7 +1,7 @@
 import {} from 'babelify/polyfill';
 
 import React from 'react';
-import Root from './Root';
+import Root from './Components/Root';
 
 import dispatcher from './dispatcher';
 import { init as initHandlers } from './handlers';

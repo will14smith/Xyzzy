@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { AjaxOperation, AjaxResponse, ErrorCodeText } from './constants';
-import dispatcher from './dispatcher';
+import { AjaxOperation, AjaxResponse, ErrorCodeText } from '../constants';
+import dispatcher from '../dispatcher';
 
-import sendRegister from './Actions/Register';
+import sendRegister from '../Actions/Register';
 
 export default class Register extends React.Component {
   constructor() {

@@ -5,8 +5,8 @@ import Browser from './Browser';
 import Chat from './Chat';
 import GameRoot from './GameRoot';
 
-import dispatcher from './dispatcher';
-import firstLoad from './Actions/FirstLoad';
+import dispatcher from '../dispatcher';
+import firstLoad from '../Actions/FirstLoad';
 
 export default class Root extends React.Component {
   constructor() {

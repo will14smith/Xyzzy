@@ -1,9 +1,9 @@
 import React from 'react';
 
-import dispatcher from './dispatcher';
-import chatStore from './Models/Chat';
+import dispatcher from '../dispatcher';
+import chatStore from '../Models/Chat';
 
-import sendMessage from './Actions/Chat';
+import sendMessage from '../Actions/Chat';
 
 export default class Chat extends React.Component {
   constructor() {

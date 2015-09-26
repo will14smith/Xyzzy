@@ -18,6 +18,11 @@ export default class GameStateComponent extends React.Component {
   }
 
   componentDidMount() {
+    this._handleGame = () => {
+      this.setState(Object.assign({}, this.state, {
+        game: gameStore.getGame(this.props.gameId),
+      }));
+    };
     this.bind(this.props.gameId);
   }
 

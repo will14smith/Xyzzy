@@ -97,8 +97,12 @@ class GameStore {
   }
 
   set(id, game, playerInfo) {
-    this._games[id] = game;
-    this._playerInfo[id] = playerInfo;
+    if (game) {
+      this._games[id] = game;
+    }
+    if (playerInfo) {
+      this._playerInfo[id] = playerInfo;
+    }
 
     dispatch(`game:${id}`);
   }

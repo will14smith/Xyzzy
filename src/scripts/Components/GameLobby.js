@@ -23,7 +23,6 @@ export default class GameLobby extends GameStateComponent {
   }
 
   componentDidMount() {
-    this._handleGame = () => { };
     super.componentDidMount();
   }
 

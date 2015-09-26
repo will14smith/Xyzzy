@@ -18,40 +18,47 @@ import getGameInfo from '../Actions/GetGameInfo';
 import leaveGame from '../Actions/LeaveGame';
 
 export default class GameRoot extends React.Component {
+  static propTypes = {
+    gameId: React.PropTypes.number.isRequired,
+  };
+
   constructor(props) {
     super(props);
-    this.state = { gameId: props.gameId };
+    this.state = { };
   }
 
   componentDidMount() {
     this._handleGame = () => {
-      const gameId = this.state.gameId;
+      const gameId = this.props.gameId;
       const game = gameStore.getGame(gameId);
       const playerInfo = gameStore.getPlayerInfo(gameId);
 
-      this.setState({ gameId, game, playerInfo });
+      this.setState({ game, playerInfo });
     };
 
-    this.bind();
+    this.bind(this.props.gameId);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.unbind();
-    this.setState({ gameId: nextProps.gameId });
-    this.bind();
+    if (this.props.gameId === nextProps.gameId) {
+      return;
+    }
+
+    this.unbind(this.props.gameId);
+    this.bind(nextProps.gameId);
   }
 
   componentWillUnmount() {
-    this.unbind();
+    this.unbind(this.props.gameId);
   }
 
-  bind() {
-    dispatcher.on(`game:${this.state.gameId}`, this._handleGame);
+  bind(gameId) {
+    dispatcher.on(`game:${gameId}`, this._handleGame);
 
-    getGameInfo({ gameId: this.state.gameId });
+    getGameInfo({ gameId });
   }
-  unbind() {
-    dispatcher.off(`game:${this.state.gameId}`, this._handleGame);
+  unbind(gameId) {
+    dispatcher.off(`game:${gameId}`, this._handleGame);
   }
 
   startGame(event) {
@@ -60,7 +67,7 @@ export default class GameRoot extends React.Component {
   }
   leaveGame(event) {
     event.preventDefault();
-    leaveGame({ gameId: this.state.gameId });
+    leaveGame({ gameId: this.props.gameId });
   }
 
   renderControls() {

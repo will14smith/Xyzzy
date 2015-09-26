@@ -1,4 +1,4 @@
-const store = [];
+const store = { };
 
 export default class CardSet {
   constructor(data) {
@@ -14,12 +14,18 @@ export default class CardSet {
   get numWhiteCards() { return this._data.numWhiteCards; }
 }
 
-export function get() {
-  return [...store];
+export function get(id = null) {
+  if (id === null) {
+    return [...store];
+  }
+
+  return store[id];
 }
 export function add(cardSet) {
-  store.push(cardSet);
+  store[cardSet.id] = cardSet;
 }
 export function clear() {
-  store.length = 0;
+  const keys = Object.keys(store);
+
+  keys.forEach(key => delete store[key]);
 }

@@ -6,7 +6,7 @@ export class Game {
   constructor({
     id, state,
     host, players, playerLimit, spectators, spectatorLimit,
-    idleTimerEnabled, passworded,
+    idleTimerEnabled, password, passworded,
     cardSets, blankLimit, scoreLimit,
    }) {
     this._id = id;
@@ -17,6 +17,7 @@ export class Game {
     this._spectators = spectators;
     this._spectatorLimit = spectatorLimit;
     this._idleTimerEnabled = idleTimerEnabled;
+    this._password = password;
     this._passworded = passworded;
     this._cardSets = cardSets;
     this._blankLimit = blankLimit;
@@ -27,14 +28,16 @@ export class Game {
   get state() { return this._state; }
   get host() { return this._host; }
   get players() { return this._players; }
-  get playerLimit() { return this._playerLimit; }
   get spectators() { return this._spectators; }
+  get passworded() { return this._passworded; }
+
+  get scoreLimit() { return this._scoreLimit; }
+  get playerLimit() { return this._playerLimit; }
   get spectatorLimit() { return this._spectatorLimit; }
   get idleTimerEnabled() { return this._idleTimerEnabled; }
-  get passworded() { return this._passworded; }
+  get password() { return this._password; }
   get cardSets() { return this._cardSets; }
   get blankLimit() { return this._blankLimit; }
-  get scoreLimit() { return this._scoreLimit; }
 
   static fromServer(data) {
     const options = data[GameInfo.GAME_OPTIONS];
@@ -50,10 +53,11 @@ export class Game {
       spectatorLimit: options[GameOptionData.SPECTATOR_LIMIT],
 
       idleTimerEnabled: options[GameOptionData.USE_TIMER],
+      password: options[GameOptionData.PASSWORD],
       passworded: data[GameInfo.HAS_PASSWORD],
 
       cardSets: options[GameOptionData.CARD_SETS],
-      blankLimit: options[GameOptionData.USE_TIMER],
+      blankLimit: options[GameOptionData.BLANKS_LIMIT],
       scoreLimit: options[GameOptionData.SCORE_LIMIT],
     });
   }

@@ -29,6 +29,7 @@ function handle(dispatcher, op, successFn, errorFn) {
   }
 }
 
+import createGame from './CreateGame';
 import firstLoad, { handleError as firstLoadError } from './FirstLoad';
 import gameList from './GameList';
 import getGameInfo from './GetGameInfo';
@@ -36,11 +37,14 @@ import joinGame from './JoinGame';
 import leaveGame from './LeaveGame';
 import names from './Names';
 import register from './Register';
+import startGame, { handleError as startGameError } from './StartGame';
 
 export function init(dispatcher) {
   dispatcher.on('ajaxResponse', success);
   dispatcher.on('ajaxError', error);
 
+  handle(dispatcher, AjaxOperation.CHANGE_GAME_OPTIONS, () => { /* NOOP */ });
+  handle(dispatcher, AjaxOperation.CREATE_GAME, createGame);
   handle(dispatcher, AjaxOperation.FIRST_LOAD, firstLoad, firstLoadError);
   handle(dispatcher, AjaxOperation.GAME_LIST, gameList);
   handle(dispatcher, AjaxOperation.GET_GAME_INFO, getGameInfo);
@@ -48,4 +52,5 @@ export function init(dispatcher) {
   handle(dispatcher, AjaxOperation.LEAVE_GAME, leaveGame);
   handle(dispatcher, AjaxOperation.NAMES, names);
   handle(dispatcher, AjaxOperation.REGISTER, register);
+  handle(dispatcher, AjaxOperation.START_GAME, startGame, startGameError);
 }

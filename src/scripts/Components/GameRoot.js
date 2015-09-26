@@ -16,6 +16,7 @@ import appState from '../Models/App';
 import gameStore from '../Models/Game';
 import getGameInfo from '../Actions/GetGameInfo';
 import leaveGame from '../Actions/LeaveGame';
+import startGame from '../Actions/StartGame';
 
 export default class GameRoot extends React.Component {
   static propTypes = {
@@ -63,18 +64,19 @@ export default class GameRoot extends React.Component {
 
   startGame(event) {
     event.preventDefault();
-    // TODO
+    startGame({ gameId: this.props.gameId });
   }
   leaveGame(event) {
     event.preventDefault();
     leaveGame({ gameId: this.props.gameId });
   }
 
-  renderControls() {
-    // TODO show/hide start button
+  renderControls(game, isHosting) {
+    const showStart = game && game.state === GameState.LOBBY && isHosting;
+
     return (<div className="grid">
       <div className="grid__6 text--left">
-        <a onClick={e => this.startGame(e)} className="card">Start</a>
+        {(showStart ? <a onClick={e => this.startGame(e)} className="card">Start</a> : null)}
       </div>
       <div className="grid__6 text--right">
         <a onClick={e => this.leaveGame(e)} className="card">Leave Game</a>
@@ -82,21 +84,18 @@ export default class GameRoot extends React.Component {
     </div>);
   }
 
-  renderGame() {
-    if (!this.state.game) {
+  renderGame(game, isHosting) {
+    if (!game) {
       return <div className="card">Loading...</div>;
     }
 
-    const isHosting = this.state.game.host === appState.username;
-    // 2 states: lobby (host, player, spectator), playing (player, spectator)
-
-    switch (this.state.game.state) {
-    case GameState.LOBBY: return <GameLobby gameId={this.state.game.id} isHosting={isHosting} />;
-    case GameState.DEALING: return <GameDealing gameId={this.state.game.id} isHosting={isHosting} />;
-    case GameState.PLAYING: return <GamePlaying gameId={this.state.game.id} isHosting={isHosting} />;
-    case GameState.JUDGING: return <GameJudging gameId={this.state.game.id} isHosting={isHosting} />;
-    case GameState.ROUND_OVER: return <GameRoundOver gameId={this.state.game.id} isHosting={isHosting} />;
-    default: throw new Error(`Unknown game state ${this.state.game.state}`);
+    switch (game.state) {
+    case GameState.LOBBY: return <GameLobby gameId={game.id} isHosting={isHosting} />;
+    case GameState.DEALING: return <GameDealing gameId={game.id} isHosting={isHosting} />;
+    case GameState.PLAYING: return <GamePlaying gameId={game.id} isHosting={isHosting} />;
+    case GameState.JUDGING: return <GameJudging gameId={game.id} isHosting={isHosting} />;
+    case GameState.ROUND_OVER: return <GameRoundOver gameId={game.id} isHosting={isHosting} />;
+    default: throw new Error(`Unknown game state ${game.state}`);
     }
   }
 
@@ -107,10 +106,13 @@ export default class GameRoot extends React.Component {
   }
 
   render() {
+    const game = this.state.game;
+    const isHosting = game && game.host === appState.username;
+
     return (<div className="grid">
       <div className="grid__9">
-        {this.renderControls()}
-        {this.renderGame()}
+        {this.renderControls(game, isHosting)}
+        {this.renderGame(game, isHosting)}
         {this.renderPlayers()}
       </div>
       <div className="grid__3"><Chat /></div>

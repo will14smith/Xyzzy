@@ -50,10 +50,21 @@ export default class Builder {
     this._request.serial = serialCounter++;
     Builder.addPending(this._request);
 
+    const reqRaw = this._request.toObject();
+    const reqData = {};
+    Object.keys(reqRaw).forEach(key => {
+      const item = reqRaw[key];
+      if (typeof item === 'object') {
+        reqData[key] = JSON.stringify(item);
+      } else {
+        reqData[key] = item;
+      }
+    });
+
     return ajax({
       method: 'POST',
       url: '/zy/AjaxServlet',
-      data: this._request.toObject(),
+      data: reqData,
     }).then(data => {
       if (data[AjaxResponse.ERROR] === true) {
         return dispatch('ajaxError', data);

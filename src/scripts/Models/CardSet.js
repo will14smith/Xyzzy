@@ -16,7 +16,7 @@ export default class CardSet {
 
 export function get(id = null) {
   if (id === null) {
-    return [...store];
+    return Object.keys(store).map(key => store[key]);
   }
 
   return store[id];
